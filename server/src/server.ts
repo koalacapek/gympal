@@ -1,4 +1,6 @@
 import express, { Express, Request, Response } from "express";
+import cors from "cors";
+import morgan from "morgan";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import User from "./models/user.model";
@@ -25,6 +27,8 @@ const connect = async () => {
 connect();
 
 app.use(express.json());
+app.use(cors());
+app.use(morgan(":method :url :status"));
 
 app.get("/", async (req: Request, res: Response) => {
   res.send("hello");
