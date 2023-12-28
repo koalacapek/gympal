@@ -4,6 +4,7 @@ import morgan from "morgan";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import User from "./models/user.model";
+import { register } from "./auth";
 
 dotenv.config();
 
@@ -35,22 +36,23 @@ app.get("/", async (req: Request, res: Response) => {
 });
 
 app.post("/user/create", async (req: Request, res: Response) => {
-  const detail = {
-    email: req.body.email,
-    username: req.body.username,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    photo: req.body.photo,
-  };
+  const { email, password, username, firstName, lastName, photo } = req.body;
   try {
-    const newUser = await User.create(detail);
-    res.status(200).json(newUser);
-  } catch (e) {
+    const token = await register({
+      email,
+      password,
+      username,
+      firstName,
+      lastName,
+      photo,
+    });
+    return res.json({ token });
+  } catch (e: any) {
     console.error(e);
-    res.status(400);
+    return res.status(400).json({ error: e.message });
   }
 });
 
 app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
+  console.log(`Server is running at http://localhost:${port}`);
 });

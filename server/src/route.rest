@@ -2,8 +2,9 @@ POST http://localhost:3000/user/create
 Content-Type: application/json
 
 {
-  "email": "tese@gmail.com",
-  "username": "monge12ki1",
+  "email": "tese@gmsail.com",
+  "password": "123123",
+  "username": "mongse12ki1",
   "firstName": "mongodb",
   "lastName": "gapunyakontol",
   "photo": "gaadaduluye"
